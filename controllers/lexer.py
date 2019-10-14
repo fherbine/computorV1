@@ -2,7 +2,7 @@ from sly import Lexer
 
 class PolyLexer(Lexer):
     tokens = { NUMBER, ADD, MINUS, TIMES, DIVIDE, LPAREN,
-               RPAREN, EQ, X, POWER }
+               RPAREN, X, POWER }
 
 
     ignore = ' \t'
@@ -14,7 +14,6 @@ class PolyLexer(Lexer):
     DIVIDE = r'/'
     LPAREN = r'[\(\[]'
     RPAREN = r'[\)\]]'
-    EQ = r'='
     X = r'X\^[0-9]+'
     POWER = r'\^'
 

@@ -10,24 +10,37 @@ class PolyParser(Parser):
         ('left', X),
         ('left', TIMES, DIVIDE),
         ('left', POWER),
-    #    ('right', UMINUS)
+        ('right', UMINUS)
     )
 
     def __init__(self):
         self.degrees = {}
 
+    def filter_results(self):
+        output = {}
+        degrees = self.degrees
+        for degree, times in degrees.items():
+            output[degree] = sum(times)
+
+        self.degrees = {}
+
+        return output
+
     @_('xexpr')
     def statement(self, parsed):
-        # DEBUG
-        #print(parsed.expr)
-        print(self.degrees)
-        self.degrees = {}
+        return self.filter_results()
 
     @_('expr')
     def statement(self, parsed):
         self.degrees.setdefault('X^0', [])
         self.degrees['X^0'].append(parsed.expr)
-        print(self.degrees)
+
+        return self.filter_results()
+
+    @_('X')
+    def statement(self, parsed):
+        return {parsed.X: 1}
+
 
     @_('xexpr MINUS expr',
        'xexpr ADD expr',
@@ -63,7 +76,6 @@ class PolyParser(Parser):
     def xexpr(self, parsed):
         self.degrees.setdefault(parsed.X, [])
         self.degrees[parsed.X].append(parsed.expr)
-        print('X:', parsed.X, parsed.expr)
         return (parsed.X, parsed.expr, len(self.degrees[parsed.X]) - 1)
 
     @_('expr DIVIDE X',
@@ -73,9 +85,22 @@ class PolyParser(Parser):
         self.degrees[parsed.X].append(1 / parsed.expr)
         return (parsed.X, 1 / parsed.expr, len(self.degrees[parsed.X]) - 1)
 
+    @_('X ADD expr',
+       'expr ADD X')
+    def expr(self, parsed):
+        self.degrees.setdefault(parsed.X, [])
+        self.degrees[parsed.X].append(1)
+        return parsed.expr
+
+    @_('X MINUS expr',
+       'expr MINUS X')
+    def expr(self, parsed):
+        self.degrees.setdefault(parsed.X, [])
+        self.degrees[parsed.X].append(1)
+        return -parsed.expr
+
     @_('expr TIMES expr')
     def expr(self, parsed):
-        print('TIMES', parsed.expr0, parsed.expr1)
         return parsed.expr0 * parsed.expr1
 
     @_('expr DIVIDE expr')
@@ -88,13 +113,19 @@ class PolyParser(Parser):
 
     @_('expr MINUS expr')
     def expr(self, parsed):
-        print('MINUS', parsed.expr0, parsed.expr1)
         return parsed.expr0 - parsed.expr1
 
     @_('expr ADD expr')
     def expr(self, parsed):
-        print('ADD', parsed.expr0, parsed.expr1)
         return parsed.expr0 + parsed.expr1
+
+    @_('MINUS expr %prec UMINUS')
+    def expr(self, parsed):
+        return -parsed.expr
+
+    @_('LPAREN expr RPAREN')
+    def expr(self, parsed):
+        return parsed.expr
 
     @_('NUMBER')
     def expr(self, parsed):
