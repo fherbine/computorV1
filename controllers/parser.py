@@ -10,7 +10,8 @@ class PolyParser(Parser):
         ('left', X),
         ('left', TIMES, DIVIDE),
         ('left', POWER),
-        ('right', UMINUS)
+        ('right', UMINUS),
+        ('right', UMINX)
     )
 
     def __init__(self):
@@ -42,9 +43,18 @@ class PolyParser(Parser):
         return {parsed.X: 1}
 
 
-    @_('xexpr MINUS expr',
-       'xexpr ADD expr',
-       'expr MINUS xexpr',
+    @_('xexpr MINUS expr')
+    def expr(self, parsed):
+        return -parsed.expr
+
+    @_('expr MINUS xexpr')
+    def expr(self, parsed):
+        x, coef, degree_index = parsed.xexpr
+        coef = -coef
+        self.degrees[x][degree_index] = coef
+        return parsed.expr
+
+    @_('xexpr ADD expr',
        'expr ADD xexpr')
     def expr(self, parsed):
         """ Used if an xexpr (made of an unknown raised to the power) collide a
@@ -68,8 +78,16 @@ class PolyParser(Parser):
         self.degrees[x][degree_index] = coef
         return (x, coef, degree_index)
 
-    #@_('xexpr TIMES xexpr')
-    #def
+    @_('xexpr ADD xexpr')
+    def xexpr(self, parsed):
+        return parsed.xexpr1
+
+    @_('xexpr MINUS xexpr')
+    def xexpr(self, parsed):
+        x, coef, degree_index = parsed.xexpr1
+        coef = -coef
+        self.degrees[x][degree_index] = coef
+        return (x, coef, degree_index)
 
     @_('expr TIMES X',
        'X TIMES expr')
@@ -99,6 +117,12 @@ class PolyParser(Parser):
         self.degrees[parsed.X].append(1)
         return -parsed.expr
 
+    @_('MINUS X %prec UMINX')
+    def xexpr(self, parsed):
+        self.degrees.setdefault(parsed.X, [])
+        self.degrees[parsed.X].append(-1)
+        return (parsed.X, -1, len(self.degrees[parsed.X]) - 1)
+
     @_('expr TIMES expr')
     def expr(self, parsed):
         return parsed.expr0 * parsed.expr1
@@ -126,6 +150,10 @@ class PolyParser(Parser):
     @_('LPAREN expr RPAREN')
     def expr(self, parsed):
         return parsed.expr
+
+    @_('LPAREN xexpr RPAREN')
+    def xexpr(self, parsed):
+        return parsed.xexpr
 
     @_('NUMBER')
     def expr(self, parsed):
