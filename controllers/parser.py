@@ -160,4 +160,4 @@ class PolyParser(Parser):
         return parsed.NUMBER
 
     def error(self, parsed):
-        print('err')
+        raise SyntaxError('An error occurs while parsing.')

@@ -25,5 +25,5 @@ class PolyLexer(Lexer):
         return token
 
     def error(self, token):
-        print('Illegal character: `%s`' % token.value[0])
+        raise SyntaxError('Illegal character: `%s`' % token.value[0])
         self.index += 1
