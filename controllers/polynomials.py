@@ -1,13 +1,16 @@
 AUTHORIZED_POLYNOMS = ['X^0', 'X^1', 'X^2']
 
+# Avoid result like `-0.0`
+sanitize_result = lambda n: n if n else 0
+
 class Solver:
     def solve(self, null_result_polynom, degree):
         solution = getattr(self, '_solve_degree_%s' % degree)(
             null_result_polynom
         )
         n, scope = solution[:2]
-        print(f'There is {n} solution(s) in {scope}:')
-        print(*solution[2:], sep='\n')
+        print(f'There is {n} solution(s) in {scope}.')
+        print(*map(sanitize_result, solution[2:]), sep='\n')
 
     def _solve_degree_0(self, null_result_polynom):
         null_result = null_result_polynom.get('X^0', 0)
@@ -110,20 +113,21 @@ class PolyCalc:
 
     def dispatch_reduced_form(self):
         output = ''
+        reduced_form = self.reduced_form
 
-        for degree, value in self.reduced_form.items():
+        for degree, value in reduced_form.items():
             formula = '' if not output else ' '
 
-            if not value:
+            if not value and (any(reduced_form.values()) or degree != 'X^0'):
                 continue
 
             if degree == 'X^0':
                 formula = f'{value}'
             else:
                 if value < 0:
-                    formula += '- '
+                    formula += '- ' if formula else '-'
                 else:
-                    formula += '+ '
+                    formula += '+ ' if formula else ''
                 formula += str(abs(value))
 
                 if degree == 'X^1':
