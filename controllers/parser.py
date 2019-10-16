@@ -54,6 +54,31 @@ class PolyParser(Parser):
         self.degrees[x][degree_index] = coef
         return parsed.expr
 
+    @_('xexpr ADD X',
+       'X ADD xexpr')
+    def xexpr(self, parsed):
+        self.degrees.setdefault(parsed.X, [])
+        self.degrees[parsed.X].append(1)
+        coef, degree_index = 1, len(self.degrees[parsed.X]) - 1
+
+        return (parsed.X, coef, degree_index)
+
+    @_('X MINUS xexpr')
+    def xexpr(self, parsed):
+        x, coef, degree_index = parsed.xexpr
+        coef = -coef
+        self.degrees[x][degree_index] = coef
+        self.degrees.setdefault(parsed.X, [])
+        self.degrees[parsed.X].append(1)
+        return (x, coef, degree_index)
+
+    @_('xexpr MINUS X')
+    def xexpr(self, parsed):
+        self.degrees.setdefault(parsed.X, [])
+        self.degrees[parsed.X].append(-1)
+
+        return (parsed.X, -1, len(self.degrees[parsed.X]) - 1)
+
     @_('xexpr ADD expr',
        'expr ADD xexpr')
     def expr(self, parsed):
@@ -116,6 +141,30 @@ class PolyParser(Parser):
         self.degrees.setdefault(parsed.X, [])
         self.degrees[parsed.X].append(1)
         return -parsed.expr
+
+    @_('X ADD X')
+    def xexpr(self, parsed):
+        x0, x1 = parsed.X0, parsed.X1
+        self.degrees.setdefault(x0, [])
+        self.degrees[x0].append(1)
+
+        self.degrees.setdefault(x1, [])
+        self.degrees[x1].append(1)
+        coef1, degree_index1 = 1, len(self.degrees[x1]) - 1
+
+        return (x1, coef1, degree_index1)
+
+    @_('X MINUS X')
+    def xexpr(self, parsed):
+        x0, x1 = parsed.X0, parsed.X1
+        self.degrees.setdefault(x0, [])
+        self.degrees[x0].append(1)
+
+        self.degrees.setdefault(x1, [])
+        self.degrees[x1].append(-1)
+        coef1, degree_index1 = -1, len(self.degrees[x1]) - 1
+
+        return (x1, coef1, degree_index1)
 
     @_('MINUS X %prec UMINX')
     def xexpr(self, parsed):

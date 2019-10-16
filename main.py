@@ -41,7 +41,7 @@ if __name__ == '__main__':
         result = parser.parse(lexer.tokenize(result))
 
         calculator.simplify(left_operation, result)
-        calculator.dispatch_reduced_form()
+        print(calculator.dispatch_reduced_form())
 
         while True:
             degree = input('Polynomial degree: ')
@@ -51,7 +51,7 @@ if __name__ == '__main__':
             except Exception as e:
                 print(e)
 
-        calculator.solve()
+        print(*calculator.solve(), sep='\n')
 
     except Exception as e:
         print(e)

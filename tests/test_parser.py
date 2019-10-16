@@ -1,5 +1,3 @@
-import pytest
-
 def parse_operation(operation):
     from controllers.lexer import PolyLexer
     from controllers.parser import PolyParser

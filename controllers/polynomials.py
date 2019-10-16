@@ -9,8 +9,11 @@ class Solver:
             null_result_polynom
         )
         n, scope = solution[:2]
-        print(f'There is {n} solution(s) in {scope}.')
-        print(*map(sanitize_result, solution[2:]), sep='\n')
+        solution = (
+            f'There is {n} solution(s) in {scope}.',
+            *map(sanitize_result, solution[2:]),
+        )
+        return solution
 
     def _solve_degree_0(self, null_result_polynom):
         null_result = null_result_polynom.get('X^0', 0)
@@ -92,7 +95,8 @@ class PolyCalc:
         self._check_operation_authorized_degree(right_operation)
 
     def solve(self):
-        Solver().solve(self.reduced_form, self.degree)
+        solution = Solver().solve(self.reduced_form, self.degree)
+        return solution
 
     @property
     def degree(self):
@@ -137,7 +141,7 @@ class PolyCalc:
 
             output += formula
 
-        print(f'Reduced form: {output} = 0')
+        return f'Reduced form: {output} = 0'
 
     def _check_operation_conformity(self, operation):
         for degree, times in operation.items():
