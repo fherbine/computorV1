@@ -16,6 +16,10 @@ class Solver:
         return solution
 
     def _solve_degree_0(self, null_result_polynom):
+        """In case of a zero degree polynomial equation.
+
+        If the comparaison is correct, the unique solution will be `0`.
+        """
         null_result = null_result_polynom.get('X^0', 0)
 
         if not null_result:
@@ -82,6 +86,10 @@ class PolyCalc:
         self.reduced_form = {}
 
     def simplify(self, left_operation, right_operation):
+        """Simplify equation into self.reduced_form:
+
+        self.reduced_form = {'X^0': n, 'X^1': n, 'X^2': n}.
+        """
         null_result_polynom = {}
 
         for polynom in AUTHORIZED_POLYNOMS:
@@ -116,6 +124,7 @@ class PolyCalc:
         self._check_operation_conformity(self.reduced_form)
 
     def dispatch_reduced_form(self):
+        """Return displayable str for reduced form."""
         output = ''
         reduced_form = self.reduced_form
 

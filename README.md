@@ -22,4 +22,4 @@ Todos:
 
 - [x] Specific behavior such as `0=0`
 - [x] Unittests
-- [ ] Documentation
+- [x] Documentation
