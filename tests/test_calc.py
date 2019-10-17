@@ -190,14 +190,14 @@ def test_solve_0_degrees_eq():
 
     result = get_result(equation, 0)
 
-    assert result == (0,)
+    assert result == ('\u221e',)
 
 def test_solve_0_degrees_eq2():
     equation = '42=42'
 
     result = get_result(equation, 0)
 
-    assert result == (0,)
+    assert result == ('\u221e',)
 
 def test_solve_0_degrees_eq3():
     equation = '42=0'

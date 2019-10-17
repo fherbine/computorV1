@@ -25,7 +25,7 @@ class Solver:
         null_result = null_result_polynom.get('X^0', 0)
 
         if not null_result:
-            return ('unique', 'real', null_result)
+            return ('infinite number of', 'real', '\u221e')
         return ('no', 'real')
 
     def _solve_degree_1(self, null_result_polynom):
