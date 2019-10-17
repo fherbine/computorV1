@@ -289,3 +289,17 @@ def test_solve_2_degrees_eq5():
     result = get_result(equation, 2)
 
     assert result == (-0.5,)
+
+def test_solve_2_degrees_eq_complex_result():
+    equation = 'X^2 = -49'
+
+    result = get_result(equation, 2)
+
+    assert result == ('-7i', '7i')
+
+def test_solve_2_degrees_eq_complex_result2():
+    equation = 'X^2 + X^1 * 4 + 20 = 0'
+
+    result = get_result(equation, 2)
+
+    assert result == ('(-2 - 4i)', '(-2 + 4i)')

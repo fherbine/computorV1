@@ -76,8 +76,8 @@ class Solver:
             return (
                 'two',
                 'complex',
-                Complex(-b, -discriminant_sqrt) / (2*a),
-                Complex(-b, discriminant_sqrt) / (2*a),
+                str(Complex(-b, -discriminant_sqrt) / (2*a)),
+                str(Complex(-b, discriminant_sqrt) / (2*a)),
             )
 
 
