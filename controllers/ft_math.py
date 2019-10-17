@@ -49,17 +49,47 @@ def ft_sqrt(n):
 
 class Complex:
     def __init__(self, r, i):
-        self.r = r
-        self.i = i
+        self._r = r
+        self._i = i
+
+    @property
+    def r(self):
+        if not isinstance(self._r, int):
+            return int(self._r) if self._r.is_integer() else self._r
+        return self._r
+
+    @r.setter
+    def r(self, value):
+        self._r = value
+
+    @property
+    def i(self):
+        if not isinstance(self._i, int):
+            return int(self._i) if self._i.is_integer() else self._i
+        return self._i
+
+    @i.setter
+    def i(self, value):
+        self._i = value
 
     def __repr__(self):
-        return self.__str__()
+        return "'%s'" % self.__str__()
 
     def __str__(self):
         r, i = self.r, self.i
         separator = '+' if i >= 0 else '-'
         i = ft_abs(i)
-        return f'({r} {separator} {i})'
+
+        if not i:
+            return f'{r}'
+
+        if not r:
+            if separator == '+':
+                separator = ''
+
+            return f'{separator}{i}i'
+
+        return f'({r} {separator} {i}i)'
 
     def __add__(self, number):
         r = self.r
