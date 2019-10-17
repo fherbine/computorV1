@@ -1,3 +1,5 @@
+from controllers.ft_math import *
+
 AUTHORIZED_POLYNOMS = ['X^0', 'X^1', 'X^2']
 
 # Avoid result like `-0.0`
@@ -56,14 +58,12 @@ class Solver:
         b = null_result_polynom.get('X^1', 0)
         c = null_result_polynom.get('X^0', 0)
 
-        discriminant = b**2 - 4 * a * c
-        # Note: I'm not using math.sqrt because it's prohibited so I raised to
-        # .5 power.
-        discriminant_sqrt = discriminant**.5
+        discriminant = ft_power(b, 2) - 4 * a * c
 
         if not discriminant:
             return ('one', 'real', -b / (2*a))
         elif discriminant > 0:
+            discriminant_sqrt = ft_sqrt(discriminant)
             return (
                 'two',
                 'real',
@@ -72,11 +72,12 @@ class Solver:
             )
         else:
             # Complex solutions
+            discriminant_sqrt = ft_sqrt(ft_abs(discriminant))
             return (
                 'two',
                 'complex',
-                complex(-b, -abs(discriminant_sqrt)) / (2*a),
-                complex(-b, abs(discriminant_sqrt)) / (2*a),
+                Complex(-b, -discriminant_sqrt) / (2*a),
+                Complex(-b, discriminant_sqrt) / (2*a),
             )
 
 
@@ -141,7 +142,7 @@ class PolyCalc:
                     formula += '- ' if formula else '-'
                 else:
                     formula += '+ ' if formula else ''
-                formula += str(abs(value))
+                formula += str(ft_abs(value))
 
                 if degree == 'X^1':
                     formula += f' * X'

@@ -1,5 +1,6 @@
 from sly import Parser
 
+from controllers.ft_math import ft_power
 from controllers.lexer import PolyLexer
 
 class PolyParser(Parser):
@@ -182,7 +183,7 @@ class PolyParser(Parser):
 
     @_('expr POWER expr')
     def expr(self, parsed):
-        return parsed.expr0 ** parsed.expr1
+        return ft_power(parsed.expr0, parsed.expr1)
 
     @_('expr MINUS expr')
     def expr(self, parsed):
