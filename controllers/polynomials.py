@@ -100,18 +100,18 @@ class Solver:
             discriminant_sqrt = ft_sqrt(ft_abs(discriminant))
             print('\u0394 is negative')
             print(
-                'x1 = -b - \u221a|\u0394| / (2a)',
-                'x2 = -b + \u221a|\u0394| / (2a)',
+                'x1 = -b - i\u221a|\u0394| / (2a)',
+                'x2 = -b + i\u221a|\u0394| / (2a)',
                 sep='; ',
             )
             print(
-                f'x1 = -b - \u221a|{discriminant}| / (2a)',
-                f'x2 = -b + \u221a|{discriminant}| / (2a)',
+                f'x1 = -b - i\u221a|{discriminant}| / (2a)',
+                f'x2 = -b + i\u221a|{discriminant}| / (2a)',
                 sep='; ',
             )
             print(
-                f'x1 = -{b} - {discriminant_sqrt} / (2 * {a})',
-                f'x2 = -{b} + {discriminant_sqrt} / (2 * {a})',
+                f'x1 = -{b} - i{discriminant_sqrt} / (2 * {a})',
+                f'x2 = -{b} + i{discriminant_sqrt} / (2 * {a})',
                 sep='; ',
             )
             return (
