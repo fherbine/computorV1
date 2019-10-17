@@ -34,6 +34,8 @@ class Solver:
             xa + b = 0
         <=> x = -b / a
         """
+        print('x = -b / a')
+        print('x = -{b} / {a}')
         a = null_result_polynom.get('X^1', 0)
         b = null_result_polynom.get('X^0', 0)
 
@@ -59,11 +61,33 @@ class Solver:
         c = null_result_polynom.get('X^0', 0)
 
         discriminant = ft_power(b, 2) - 4 * a * c
+        print('\u0394 = b\u00b2 - 4ac')
+        print(f'\u0394 = {b}\u00b2 - 4 * {a} * {c}')
+        print(f'\u0394 = {discriminant}')
 
         if not discriminant:
+            print('\u0394 is null')
+            print('x1 = x2 = -b / (2a)')
+            print(f'x1 = x2 = -{b} / (2 * {a})')
             return ('one', 'real', -b / (2*a))
         elif discriminant > 0:
             discriminant_sqrt = ft_sqrt(discriminant)
+            print('\u0394 is positive')
+            print(
+                'x1 = -b - \u221a\u0394 / (2a)',
+                'x2 = -b + \u221a\u0394 / (2a)',
+                sep='; ',
+            )
+            print(
+                f'x1 = -b - \u221a{discriminant} / (2a)',
+                f'x2 = -b + \u221a{discriminant} / (2a)',
+                sep='; ',
+            )
+            print(
+                f'x1 = -{b} - {discriminant_sqrt} / (2 * {a})',
+                f'x2 = -{b} + {discriminant_sqrt} / (2 * {a})',
+                sep='; ',
+            )
             return (
                 'two',
                 'real',
@@ -73,6 +97,22 @@ class Solver:
         else:
             # Complex solutions
             discriminant_sqrt = ft_sqrt(ft_abs(discriminant))
+            print('\u0394 is negative')
+            print(
+                'x1 = -b - \u221a|\u0394| / (2a)',
+                'x2 = -b + \u221a|\u0394| / (2a)',
+                sep='; ',
+            )
+            print(
+                f'x1 = -b - \u221a|{discriminant}| / (2a)',
+                f'x2 = -b + \u221a|{discriminant}| / (2a)',
+                sep='; ',
+            )
+            print(
+                f'x1 = -{b} - {discriminant_sqrt} / (2 * {a})',
+                f'x2 = -{b} + {discriminant_sqrt} / (2 * {a})',
+                sep='; ',
+            )
             return (
                 'two',
                 'complex',
