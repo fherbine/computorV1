@@ -303,3 +303,73 @@ def test_solve_2_degrees_eq_complex_result2():
     result = get_result(equation, 2)
 
     assert result == ('(-2 - 4i)', '(-2 + 4i)')
+
+def test_reduced_simple_1_degree_eq_with_natural_inputs():
+    equation = 'X=0'
+
+    reduced_form = get_reduced_form(equation)
+
+    assert reduced_form == 'Reduced form: 1 * X = 0'
+
+def test_reduced_simple_1_degree_eq2_with_natural_inputs():
+    equation = 'X * 2=0'
+
+    reduced_form = get_reduced_form(equation)
+
+    assert reduced_form == 'Reduced form: 2 * X = 0'
+
+def test_reduced_simple_1_degree_eq3_with_natural_inputs():
+    equation = 'X + 1=0'
+
+    reduced_form = get_reduced_form(equation)
+
+    assert reduced_form == 'Reduced form: 1 + 1 * X = 0'
+
+def test_reduced_simple_1_degree_eq4_with_natural_inputs():
+    equation = 'X * 2 + 1=0'
+
+    reduced_form = get_reduced_form(equation)
+
+    assert reduced_form == 'Reduced form: 1 + 2 * X = 0'
+
+def test_reduced_1_degree_eq_with_negatives_with_natural_inputs():
+    equation = '-X=0'
+
+    reduced_form = get_reduced_form(equation)
+
+    assert reduced_form == 'Reduced form: -1 * X = 0'
+
+def test_reduced_1_degree_eq_with_negatives2_with_natural_inputs():
+    equation = '-1 * X=0'
+
+    reduced_form = get_reduced_form(equation)
+
+    assert reduced_form == 'Reduced form: -1 * X = 0'
+
+def test_reduced_1_degree_eq_with_negatives3_with_natural_inputs():
+    equation = '-1 * -X=0'
+
+    reduced_form = get_reduced_form(equation)
+
+    assert reduced_form == 'Reduced form: 1 * X = 0'
+
+def test_reduced_1_degree_eq_with_negatives4_with_natural_inputs():
+    equation = '-1 * -X=2'
+
+    reduced_form = get_reduced_form(equation)
+
+    assert reduced_form == 'Reduced form: -2 + 1 * X = 0'
+
+def test_reduced_1_degree_eq_with_negatives5_with_natural_inputs():
+    equation = '-1 * -X + 2=2'
+
+    reduced_form = get_reduced_form(equation)
+
+    assert reduced_form == 'Reduced form: 1 * X = 0'
+
+def test_reduced_1_degree_eq_with_negatives6_with_natural_inputs():
+    equation = '-1 * -X + -2=-2'
+
+    reduced_form = get_reduced_form(equation)
+
+    assert reduced_form == 'Reduced form: 1 * X = 0'
