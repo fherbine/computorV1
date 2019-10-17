@@ -89,7 +89,7 @@ class Complex:
             )
         return Complex(self.r * number, self.i * number)
 
-    def __mul__(self, number):
+    def __truediv__(self, number):
         if isinstance(number, Complex):
             # Not implemented yet
             raise TypeError(
