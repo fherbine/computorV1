@@ -34,10 +34,11 @@ class Solver:
             xa + b = 0
         <=> x = -b / a
         """
-        print('x = -b / a')
-        print('x = -{b} / {a}')
         a = null_result_polynom.get('X^1', 0)
         b = null_result_polynom.get('X^0', 0)
+
+        print('x = -b / a')
+        print(f'x = -{b} / {a}')
 
         return ('unique', 'real', -b / a)
 
