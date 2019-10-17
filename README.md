@@ -20,6 +20,17 @@ How to run Unittests:
 Todos:
 ------
 
+**MANDATORY**
+- [x] Lexer & parser
+- [x] Calculating & dispatch reduced form
+- [x] Resolving equation
 - [x] Specific behavior such as `0=0`
 - [x] Unittests
 - [x] Documentation
+
+**Bonus**
+- [x] Errors handling
+- [x] natural I/Os (subject IOs are not deprecated by this point)
+- [ ] irrational fraction result
+- [x] intermediary steps
+- [ ] others
