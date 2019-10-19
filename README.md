@@ -2,6 +2,7 @@ Computer V1
 ===========
 
 A 42 school project about polynomials.
+Final grade: **125/100**
 
 
 How to install:
